@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Signal TradingView & MT4</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Dashboard Signal Masa Nyata</h1>
+            <div class="status-indicator">
+                <span id="connection-status" class="dot disconnected"></span>
+                <span id="status-text">Terputus</span>
+            </div>
+        </header>
+        
+        <main>
+            <table class="signal-table">
+                <thead>
+                    <tr>
+                        <th>Masa</th>
+                        <th>Pasangan (Pair)</th>
+                        <th>Tindakan</th>
+                        <th>Harga</th>
+                    </tr>
+                </thead>
+                <tbody id="signal-body">
+                    </tbody>
+            </table>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
