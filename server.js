@@ -1,33 +1,29 @@
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
-const cors = require('cors');
 
 const app = express();
 const server = http.createServer(app);
-
-// Tetapan WebSockets untuk membenarkan laman web berhubung
-const io = new Server(server, {
-    cors: { origin: "*" }
-});
+const io = new Server(server);
 
 app.use(express.json());
-app.use(cors());
 
-// 1. Ini adalah link/URL yang anda akan letak di TradingView Alert Webhook
+// --- KOD BAHARU DI SINI ---
+// Beritahu pelayan untuk memaparkan fail HTML, CSS, dan JS dari folder bernama 'public'
+app.use(express.static('public'));
+
+// Terima webhook dari MT4 / TradingView
 app.post('/webhook', (req, res) => {
     const signalData = req.body;
-    
-    console.log('Signal Diterima dari TradingView:', signalData);
+    console.log('Signal Diterima:', signalData);
 
-    // 2. Hantar data terus ke laman web (Vanilla JS) anda
+    // Hantar data ke laman web (Vanilla JS)
     io.emit('tradingview_signal', signalData);
 
     res.status(200).send('Berjaya');
 });
 
-// Buka pelayan
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
     console.log(`Pelayan beroperasi di port ${PORT}`);
 });
